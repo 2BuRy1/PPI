@@ -15,3 +15,11 @@ export interface MissedCall {
   contact: Contact;
   timestamp: Date;
 }
+
+export interface CallHistoryItem {
+  id: string;
+  contact: Contact;
+  type: 'incoming' | 'outgoing' | 'missed' | 'blocked';
+  timestamp: Date;
+  duration?: number; // в секундах, только для завершенных звонков
+}

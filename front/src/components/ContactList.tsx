@@ -19,12 +19,10 @@ export function ContactList({ contacts, onCall, missedCallsCount, onShowMissedCa
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <div className="max-w-2xl mx-auto bg-white min-h-screen shadow-lg">
-        {/* Header */}
-        <div className="bg-blue-600 text-white p-6">
-
-          {/* Search */}
-          <div className="mt-4 relative">
+      <div className="max-w-2xl mx-auto bg-white min-h-screen">
+        {/* Search */}
+        <div className="p-6 bg-blue-600">
+          <div className="relative">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
             <input
               type="text"
