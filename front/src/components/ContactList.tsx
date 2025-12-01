@@ -22,8 +22,7 @@ export function ContactList({ contacts, onCall, missedCallsCount, onShowMissedCa
       <div className="max-w-2xl mx-auto bg-white min-h-screen shadow-lg">
         {/* Header */}
         <div className="bg-blue-600 text-white p-6">
-          <h1>Контакты</h1>
-          
+
           {/* Search */}
           <div className="mt-4 relative">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
