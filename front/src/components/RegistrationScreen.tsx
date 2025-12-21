@@ -105,14 +105,15 @@ export function RegistrationScreen({ onRegister }: RegistrationScreenProps) {
             />
           </div>
 
-          <label className="flex items-start gap-3 text-sm text-gray-600">
+          <label className="flex items-start gap-4 text-lg text-gray-700 cursor-pointer">
             <input
               type="checkbox"
               checked={hasConsented}
               onChange={(e) => setHasConsented(e.target.checked)}
-              className="mt-1 h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+              className="mt-1 h-7 w-7 rounded border-2 border-gray-300 text-blue-600 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 cursor-pointer flex-shrink-0"
+              style={{ minWidth: '28px', minHeight: '28px' }}
             />
-            <span>
+            <span className="leading-relaxed font-medium text-gray-800">
               Подтверждаю корректность данных и разрешаю обработку персональной информации
             </span>
           </label>

@@ -67,7 +67,7 @@ export function ContactList({ contacts, onCall, missedCallsCount, onShowMissedCa
                 placeholder="Поиск контактов..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="search-input w-full text-white placeholder-white/60 text-2xl font-medium"
+                className="search-input w-full text-white placeholder-white text-2xl font-medium"
               />
             </div>
 
@@ -88,15 +88,12 @@ export function ContactList({ contacts, onCall, missedCallsCount, onShowMissedCa
         {missedCallsCount > 0 && (
           <button
             onClick={onShowMissedCalls}
-            className="w-full bg-red-50 border-b border-red-200 p-4 min-h-[72px] flex items-center justify-between hover:bg-red-100 transition-colors"
+            className="w-full bg-red-600 text-white border-b-2 border-red-700 px-6 py-5 min-h-[88px] flex items-center gap-4 hover:bg-red-700 active:bg-red-800 transition-all shadow-lg hover:shadow-xl cursor-pointer"
           >
-            <div className="flex items-center gap-3">
-              <PhoneMissed className="text-red-600" size={20} />
-              <span className="text-red-900">Пропущенные вызовы</span>
+            <div className="bg-white/20 p-3 rounded-full backdrop-blur-sm">
+              <PhoneMissed className="text-white" size={24} />
             </div>
-            <div className="bg-red-600 text-white rounded-full w-6 h-6 flex items-center justify-center">
-              {missedCallsCount}
-            </div>
+            <span className="font-bold text-lg">Посмотреть пропущенные вызовы</span>
           </button>
         )}
 

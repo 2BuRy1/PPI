@@ -1051,6 +1051,26 @@ html {
   box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.45) !important;
 }
 
+.search-input::placeholder {
+  color: rgba(255, 255, 255, 0.95) !important;
+  opacity: 1 !important;
+}
+
+.search-input::-webkit-input-placeholder {
+  color: rgba(255, 255, 255, 0.95) !important;
+  opacity: 1 !important;
+}
+
+.search-input::-moz-placeholder {
+  color: rgba(255, 255, 255, 0.95) !important;
+  opacity: 1 !important;
+}
+
+.search-input:-ms-input-placeholder {
+  color: rgba(255, 255, 255, 0.95) !important;
+  opacity: 1 !important;
+}
+
 .tab-switch-panel {
   display: flex !important;
   gap: 1rem !important;
