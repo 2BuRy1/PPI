@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { Search, Phone, PhoneMissed } from 'lucide-react';
+import { useEffect, useRef, useState } from 'react';
+import { Phone, PhoneMissed, UploadCloud } from 'lucide-react';
 import { Contact } from '../types';
 
 interface ContactListProps {
@@ -11,6 +11,39 @@ interface ContactListProps {
 
 export function ContactList({ contacts, onCall, missedCallsCount, onShowMissedCalls }: ContactListProps) {
   const [searchQuery, setSearchQuery] = useState('');
+  const [isImporting, setIsImporting] = useState(false);
+  const [importMessage, setImportMessage] = useState<string | null>(null);
+  const importTimerRef = useRef<number | null>(null);
+  const messageTimerRef = useRef<number | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (importTimerRef.current) {
+        clearTimeout(importTimerRef.current);
+      }
+      if (messageTimerRef.current) {
+        clearTimeout(messageTimerRef.current);
+      }
+    };
+  }, []);
+
+  const handleImportContacts = () => {
+    if (importTimerRef.current) {
+      clearTimeout(importTimerRef.current);
+    }
+    if (messageTimerRef.current) {
+      clearTimeout(messageTimerRef.current);
+    }
+
+    setIsImporting(true);
+    setImportMessage(null);
+
+    importTimerRef.current = window.setTimeout(() => {
+      setIsImporting(false);
+      setImportMessage('Контакты импортированы');
+      messageTimerRef.current = window.setTimeout(() => setImportMessage(null), 3000);
+    }, 1000);
+  };
 
   const filteredContacts = contacts.filter(contact =>
     contact.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -20,17 +53,34 @@ export function ContactList({ contacts, onCall, missedCallsCount, onShowMissedCa
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-2xl mx-auto bg-white min-h-screen">
+        {importMessage && (
+          <div className="px-6 py-3 bg-green-50 text-green-800 text-sm border-b border-green-100">
+            {importMessage}
+          </div>
+        )}
         {/* Search */}
         <div className="p-6 bg-blue-600">
-          <div className="relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
-            <input
-              type="text"
-              placeholder="Поиск контактов..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-10 pr-4 py-3 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-400"
-            />
+          <div className="search-import-stack">
+            <div className="search-input-shell">
+              <input
+                type="text"
+                placeholder="Поиск контактов..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="search-input w-full text-white placeholder-white/60 text-2xl font-medium"
+              />
+            </div>
+
+            <div className="bg-white rounded-[4.5rem] shadow-2xl shadow-blue-900/30 p-4 border border-white/70">
+              <button
+                onClick={handleImportContacts}
+                disabled={isImporting}
+                className="w-full flex items-center justify-center gap-6 px-16 py-10 rounded-[4rem] text-blue-900 text-3xl font-black tracking-wider bg-gradient-to-r from-blue-200 via-white to-blue-50 border-4 border-white active:scale-95 transition-transform disabled:opacity-60"
+              >
+                <UploadCloud size={40} />
+                {isImporting ? 'Импортируем...' : 'Импортировать контакты'}
+              </button>
+            </div>
           </div>
         </div>
 
@@ -38,7 +88,7 @@ export function ContactList({ contacts, onCall, missedCallsCount, onShowMissedCa
         {missedCallsCount > 0 && (
           <button
             onClick={onShowMissedCalls}
-            className="w-full bg-red-50 border-b border-red-200 p-4 flex items-center justify-between hover:bg-red-100 transition-colors"
+            className="w-full bg-red-50 border-b border-red-200 p-4 min-h-[72px] flex items-center justify-between hover:bg-red-100 transition-colors"
           >
             <div className="flex items-center gap-3">
               <PhoneMissed className="text-red-600" size={20} />

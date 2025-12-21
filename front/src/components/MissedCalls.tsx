@@ -26,7 +26,7 @@ export function MissedCalls({ missedCalls, onBack, onCall, contacts }: MissedCal
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-2xl mx-auto bg-white min-h-screen shadow-lg">
         {/* Header */}
-        <div className="bg-red-600 text-white p-6">
+        <div className="bg-red-600 text-white px-6 py-4 min-h-[72px] flex items-center">
           <div className="flex items-center gap-4">
             <button
               onClick={onBack}

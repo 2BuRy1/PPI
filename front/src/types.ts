@@ -23,3 +23,15 @@ export interface CallHistoryItem {
   timestamp: Date;
   duration?: number; // в секундах, только для завершенных звонков
 }
+
+export interface RegistrationData {
+  fullName: string;
+  email: string;
+  pinCode: string;
+}
+
+export interface RegisteredUser {
+  id: string;
+  fullName: string;
+  email: string;
+}

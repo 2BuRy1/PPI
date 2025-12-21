@@ -4,7 +4,8 @@ import { CallScreen } from './components/CallScreen';
 import { MissedCalls } from './components/MissedCalls';
 import { CallHistory } from './components/CallHistory';
 import { Tabs } from './components/Tabs';
-import { Contact, CallState, MissedCall, CallHistoryItem } from './types';
+import { RegistrationScreen } from './components/RegistrationScreen';
+import { Contact, CallState, MissedCall, CallHistoryItem, RegistrationData, RegisteredUser } from './types';
 
 const INITIAL_CONTACTS: Contact[] = [
   { id: '1', name: 'Алексей Иванов', phone: '+7 (999) 123-45-67', blocked: false },
@@ -23,6 +24,7 @@ export default function App() {
   const [callHistory, setCallHistory] = useState<CallHistoryItem[]>([]);
   const [activeTab, setActiveTab] = useState<'contacts' | 'history'>('contacts');
   const [callStartTime, setCallStartTime] = useState<Date | null>(null);
+  const [currentUser, setCurrentUser] = useState<RegisteredUser | null>(null);
 
   const handleCall = (contact: Contact) => {
     if (contact.blocked) {
@@ -126,8 +128,20 @@ export default function App() {
     setCallStartTime(null);
   };
 
-  // Симулируем входящий звонок через 5 секунд после загрузки
+  const handleRegister = (data: RegistrationData) => {
+    const { pinCode, ...profile } = data;
+    setCurrentUser({
+      id: Date.now().toString(),
+      ...profile,
+    });
+  };
+
+  // Симулируем входящий звонок через 5 секунд после регистрации
   useEffect(() => {
+    if (!currentUser) {
+      return;
+    }
+
     const timer = setTimeout(() => {
       const randomContact = INITIAL_CONTACTS[Math.floor(Math.random() * INITIAL_CONTACTS.length)];
       setCallState({
@@ -135,8 +149,13 @@ export default function App() {
         contact: randomContact,
       });
     }, 5000);
+
     return () => clearTimeout(timer);
-  }, []);
+  }, [currentUser]);
+
+  if (!currentUser) {
+    return <RegistrationScreen onRegister={handleRegister} />;
+  }
 
   if (callState) {
     return (
